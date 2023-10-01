@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\LogIn\" />
+    <Folder Include="Commands\Register\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\GameSharing.Common\GameSharing.Common.csproj" />
+    <ProjectReference Include="..\..\Common\GameSharing.Model\GameSharing.Model.csproj" />
+    <ProjectReference Include="..\..\Common\GameSharing.Repository\GameSharing.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

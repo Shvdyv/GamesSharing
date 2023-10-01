@@ -1,0 +1,97 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B620911F-7D17-494B-B7C8-51108BA60108}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MainServices", "MainServices", "{C0F3E6BB-C50F-4787-A336-7BC7BB7652A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GameService", "GameService", "{BE7B2830-CE6C-45D5-9F99-F4D9F3C84AA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccountService", "AccountService", "{F36B37FE-D510-454D-B2CB-BE0C9A20A17A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ForumService", "ForumService", "{DCDEDFD7-BB31-46AE-9741-0F46AD129450}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.GameInfo.Service", "MainServices\GameSharing.Game.Service\GameSharing.GameInfo.Service.csproj", "{23BA47A2-6B1F-4449-8963-0B122307F9AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.GameInfo.Service.Application", "MainServices\GameSharing.Game.Service.Application\GameSharing.GameInfo.Service.Application.csproj", "{E657F290-2A5F-40D6-B2F7-FC3F61B16565}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Common", "Common\GameSharing.Common\GameSharing.Common.csproj", "{B1F8715C-B167-4C0A-8BE4-EBD6E6674B9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Model", "Common\GameSharing.Model\GameSharing.Model.csproj", "{EC9955A9-2CA5-450A-B24E-330F1AF7FCC5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Repository", "Common\GameSharing.Repository\GameSharing.Repository.csproj", "{86601649-C4CD-4C54-911F-0F3F9735CCF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Account.Service", "MainServices\GameSharing.Account.Service\GameSharing.Account.Service.csproj", "{3D05AAC1-136B-4DCE-AB27-D41CFB45BE1C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Account.Service.Application", "MainServices\GameSharing.Account.Service.Application\GameSharing.Account.Service.Application.csproj", "{2AE9BA49-2C0E-4156-99BB-452643DD97CE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Forum.Service", "MainServices\GameSharing.Forum.Service\GameSharing.Forum.Service.csproj", "{57AA840F-65DB-420D-9948-8131C9C8F374}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Forum.Service.Application", "MainServices\GameSharing.Forum.Service.Application\GameSharing.Forum.Service.Application.csproj", "{AD4ED833-A286-4314-ABE2-A842498F1596}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23BA47A2-6B1F-4449-8963-0B122307F9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23BA47A2-6B1F-4449-8963-0B122307F9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23BA47A2-6B1F-4449-8963-0B122307F9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23BA47A2-6B1F-4449-8963-0B122307F9AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E657F290-2A5F-40D6-B2F7-FC3F61B16565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E657F290-2A5F-40D6-B2F7-FC3F61B16565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E657F290-2A5F-40D6-B2F7-FC3F61B16565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E657F290-2A5F-40D6-B2F7-FC3F61B16565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F8715C-B167-4C0A-8BE4-EBD6E6674B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1F8715C-B167-4C0A-8BE4-EBD6E6674B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F8715C-B167-4C0A-8BE4-EBD6E6674B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1F8715C-B167-4C0A-8BE4-EBD6E6674B9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC9955A9-2CA5-450A-B24E-330F1AF7FCC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC9955A9-2CA5-450A-B24E-330F1AF7FCC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC9955A9-2CA5-450A-B24E-330F1AF7FCC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC9955A9-2CA5-450A-B24E-330F1AF7FCC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86601649-C4CD-4C54-911F-0F3F9735CCF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86601649-C4CD-4C54-911F-0F3F9735CCF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86601649-C4CD-4C54-911F-0F3F9735CCF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86601649-C4CD-4C54-911F-0F3F9735CCF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D05AAC1-136B-4DCE-AB27-D41CFB45BE1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D05AAC1-136B-4DCE-AB27-D41CFB45BE1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D05AAC1-136B-4DCE-AB27-D41CFB45BE1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D05AAC1-136B-4DCE-AB27-D41CFB45BE1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AE9BA49-2C0E-4156-99BB-452643DD97CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AE9BA49-2C0E-4156-99BB-452643DD97CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AE9BA49-2C0E-4156-99BB-452643DD97CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AE9BA49-2C0E-4156-99BB-452643DD97CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57AA840F-65DB-420D-9948-8131C9C8F374}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57AA840F-65DB-420D-9948-8131C9C8F374}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57AA840F-65DB-420D-9948-8131C9C8F374}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57AA840F-65DB-420D-9948-8131C9C8F374}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD4ED833-A286-4314-ABE2-A842498F1596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD4ED833-A286-4314-ABE2-A842498F1596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD4ED833-A286-4314-ABE2-A842498F1596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD4ED833-A286-4314-ABE2-A842498F1596}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BE7B2830-CE6C-45D5-9F99-F4D9F3C84AA9} = {C0F3E6BB-C50F-4787-A336-7BC7BB7652A6}
+		{F36B37FE-D510-454D-B2CB-BE0C9A20A17A} = {C0F3E6BB-C50F-4787-A336-7BC7BB7652A6}
+		{DCDEDFD7-BB31-46AE-9741-0F46AD129450} = {C0F3E6BB-C50F-4787-A336-7BC7BB7652A6}
+		{23BA47A2-6B1F-4449-8963-0B122307F9AD} = {BE7B2830-CE6C-45D5-9F99-F4D9F3C84AA9}
+		{E657F290-2A5F-40D6-B2F7-FC3F61B16565} = {BE7B2830-CE6C-45D5-9F99-F4D9F3C84AA9}
+		{B1F8715C-B167-4C0A-8BE4-EBD6E6674B9A} = {B620911F-7D17-494B-B7C8-51108BA60108}
+		{EC9955A9-2CA5-450A-B24E-330F1AF7FCC5} = {B620911F-7D17-494B-B7C8-51108BA60108}
+		{86601649-C4CD-4C54-911F-0F3F9735CCF3} = {B620911F-7D17-494B-B7C8-51108BA60108}
+		{3D05AAC1-136B-4DCE-AB27-D41CFB45BE1C} = {F36B37FE-D510-454D-B2CB-BE0C9A20A17A}
+		{2AE9BA49-2C0E-4156-99BB-452643DD97CE} = {F36B37FE-D510-454D-B2CB-BE0C9A20A17A}
+		{57AA840F-65DB-420D-9948-8131C9C8F374} = {DCDEDFD7-BB31-46AE-9741-0F46AD129450}
+		{AD4ED833-A286-4314-ABE2-A842498F1596} = {DCDEDFD7-BB31-46AE-9741-0F46AD129450}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64001362-AE3D-430F-84F4-A5CF16905187}
+	EndGlobalSection
+EndGlobal
