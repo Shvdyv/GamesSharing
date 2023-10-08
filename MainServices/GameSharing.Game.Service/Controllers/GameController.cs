@@ -30,7 +30,7 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGame([FromBody] GameRepresentation gameRepresantation)
         {
-            await mediator.Send(new AddGameCommand(gameRepresantation.Id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File, gameRepresantation.Rate));
+            await mediator.Send(new AddGameCommand(gameRepresantation.Id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File));
             return Ok();
         }
 
@@ -58,9 +58,9 @@ namespace GameSharing.GameInfo.Service.Controllers
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> DisplayDetailsGame([FromRoute] Guid id, string title, string description, string image, string author, string file, string comment, float rate)
+        public async Task<IActionResult> DisplayDetailsGame([FromRoute] Guid id)
         {
-            var result = await mediator.Send(new DisplayDetailsGameQuery(id, title, description, image, author, file, comment, rate));
+            var result = await mediator.Send(new DisplayDetailsGameQuery(id));
             return Ok(); // po id
         }
 

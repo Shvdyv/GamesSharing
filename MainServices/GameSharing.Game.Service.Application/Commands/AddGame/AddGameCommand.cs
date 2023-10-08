@@ -17,10 +17,10 @@ namespace GameSharing.GameInfo.Service.Application.Commands.AddGame
         public string Image { get; set; }
         public Guid Author { get; set; }
         public string File { get; set; }
-        public Rate Rate { get; set; }
+        //public Rate Rate { get; set; }
         public Game Game { get; set; }
 
-        public AddGameCommand(Guid id, string title, string description, string image, Guid author, string file, Rate rate)
+        public AddGameCommand(Guid id, string title, string description, string image, Guid author, string file /*Rate rate*/)
         {
             Id = id;
             Title = title;
@@ -28,7 +28,7 @@ namespace GameSharing.GameInfo.Service.Application.Commands.AddGame
             Image = image;
             Author = author;
             File = file;
-            Rate = rate;
+            //Rate = rate;
         }
     }
 }

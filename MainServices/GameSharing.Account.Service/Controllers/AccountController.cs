@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using GameSharing.Account.Service.Application.Commands.Login;
 
 namespace GameSharing.Account.Service.Controllers
 {
@@ -14,28 +19,65 @@ namespace GameSharing.Account.Service.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register()
+        private bool ValidateLogin(string userName, string password)
         {
+            return true;
+        }
+
+        [HttpPost] // get ... from body
+        public async Task<IActionResult> Login(string userName, string password, string returnUrl = null)
+        {
+            //ViewData["ReturnUrl"] = returnUrl;
+
+            if (ValidateLogin(userName, password))
+            {
+                var claims = new List<Claim>
+            {
+                new Claim("user", userName),
+                new Claim("role", "Member")
+            };
+
+                await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
+
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return Redirect("/");
+                }
+            }
+
             return Ok();
         }
 
         [HttpPost]
-        public async Task<IActionResult> LogIn()
+        public async Task<IActionResult> Logout()
         {
-            return Ok();
+            await HttpContext.SignOutAsync();
+            return Redirect("/");
         }
 
-        [HttpPut]
-        public async Task<IActionResult> EditAccount()
-        {
-            return Ok();
-        }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteAccount()
-        {
-            return Ok();
-        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Register()
+        //{
+        //    return Ok();
+        //}
+
+
+        //[HttpPut]
+        //public async Task<IActionResult> EditAccount()
+        //{
+        //    return Ok();
+        //}
+
+        //[HttpDelete]
+        //public async Task<IActionResult> DeleteAccount()
+        //{
+        //    return Ok();
+        //}
     }
 }
