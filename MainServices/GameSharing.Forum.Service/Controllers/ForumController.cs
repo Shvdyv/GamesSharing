@@ -3,12 +3,13 @@ using MediatR;
 using GameSharing.Forum.Service.Application.Queries.DisplayPosts;
 using GameSharing.Forum.Service.Application.Commands.AddPost;
 using GameSharing.Forum.Service.Application.Commands.DeletePost;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameSharing.Forum.Service.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class ForumController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -24,7 +25,7 @@ namespace GameSharing.Forum.Service.Controllers
             await _mediator.Send(new AddPostCommand(addPostRepresantation.Author, addPostRepresantation.Content));
             return Ok();
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> DisplayPosts()
         {

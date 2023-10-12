@@ -24,6 +24,18 @@ namespace GameSharing.Account.Service.Controllers
             return true;
         }
 
+        private string DetermineUserRole(string userName)
+        {
+            if (userName == "admin")
+            {
+                return "admin";
+            }
+            else
+            {
+                return "user";
+            }
+        }
+
         [HttpPost] // get ... from body
         public async Task<IActionResult> Login(string userName, string password, string returnUrl = null)
         {
@@ -31,11 +43,12 @@ namespace GameSharing.Account.Service.Controllers
 
             if (ValidateLogin(userName, password))
             {
+                var role = DetermineUserRole(userName);
                 var claims = new List<Claim>
-            {
-                new Claim("user", userName),
-                new Claim("role", "Member")
-            };
+                {
+                    new Claim("user", userName),
+                    new Claim(nameof(role), role)
+                };
 
                 await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
 

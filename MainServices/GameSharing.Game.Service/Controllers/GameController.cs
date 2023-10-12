@@ -9,15 +9,19 @@ using GameSharing.GameInfo.Service.Application.Queries.DownloadGame;
 using GameSharing.GameInfo.Service.Application.Commands.EditGame;
 using GameSharing.GameInfo.Service.Application.Commands.RateGame;
 using GameSharing.GameInfo.Service.Application.Commands.AddPhotos;
+using GameSharing.GameInfo.Service.Application.Commands.DeleteComment;
+using GameSharing.GameInfo.Service.Application.Commands.DeleteRate;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Xml.Linq;
 using GameSharing.GameInfo.Service.Application.Queries.GetAllGames;
 using GameSharing.Model.GameService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameSharing.GameInfo.Service.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class GameController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -49,6 +53,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllGames()
         {
@@ -56,14 +61,16 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
         [Route("{id}")]
         [HttpGet]
         public async Task<IActionResult> DisplayDetailsGame([FromRoute] Guid id)
         {
             var result = await mediator.Send(new DisplayDetailsGameQuery(id));
-            return Ok(); // po id
+            return Ok();
         }
 
+        [AllowAnonymous]
         [Route("{id}")]
         [HttpGet]
         public async Task<IActionResult> DownloadGame([FromRoute] Guid id, string file)
@@ -90,6 +97,22 @@ namespace GameSharing.GameInfo.Service.Controllers
         public async Task<IActionResult> AddPhotos([FromBody] AddPhotosRepresentation addPhotosRepresentation)
         {
             await mediator.Send(new AddPhotosCommand(addPhotosRepresentation.Photo, addPhotosRepresentation.Game));
+            return Ok();
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRate([FromRoute] Guid id)
+        {
+            await mediator.Send(new DeleteRateCommand(id));
+            return Ok();
+        }
+
+        [Route("{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteComment([FromRoute] Guid id)
+        {
+            await mediator.Send(new DeleteCommentCommand(id));
             return Ok();
         }
 
