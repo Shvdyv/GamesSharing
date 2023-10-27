@@ -16,9 +16,9 @@ namespace GameSharing.GameInfo.Service.Application.Commands.CommentGame
         public DateTime Created { get; set; }
         public Game Game { get; set; } 
 
-        public CommentGameCommand(Guid id, string content, Guid author, DateTime created, Game game)
+        public CommentGameCommand(string content, Guid author, DateTime created, Game game)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             Content = content;
             Author = author;
             Created = created;

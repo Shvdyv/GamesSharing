@@ -21,7 +21,6 @@ namespace GameSharing.Model.GameService
             Created = created;
             Game = game ?? throw new ArgumentNullException(nameof(game));
         }
-        public Comment() { }
 
         public virtual Game Game { get; set; }
     }

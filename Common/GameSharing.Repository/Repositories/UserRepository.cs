@@ -35,7 +35,7 @@ namespace GameSharing.Repository.Repositories
             }
             else
             {
-                throw new Exception("Can't find object to delete");
+                throw new ArgumentException("Can't find object to delete");
             }
         }
 

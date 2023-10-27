@@ -20,7 +20,6 @@ namespace GameSharing.Repository.Repositories
         }
         public Photo Add(Photo entity)
         {
-            entity.Id = new Guid();
             _context.Photos.Add(entity);
             _context.SaveChanges();
             return entity;

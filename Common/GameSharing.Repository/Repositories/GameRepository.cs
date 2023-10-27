@@ -13,14 +13,12 @@ namespace GameSharing.Repository.Repositories
     public class GameRepository : IRepository<Game>
     {
         private readonly Database _context;
-
         public GameRepository(Database context)
         {
             _context = context;
         }
         public Game Add(Game entity)
         {
-            entity.Id = new Guid();
             _context.Games.Add(entity);
             _context.SaveChanges();
             return entity;
@@ -37,7 +35,7 @@ namespace GameSharing.Repository.Repositories
             }
             else
             {
-                throw new Exception("Can't find object to delete");
+                throw new ArgumentException("Can't find object to delete");
             }
         }
 
@@ -71,6 +69,7 @@ namespace GameSharing.Repository.Repositories
         public void Update(Game entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
+            _context.Update(entity);
             _context.SaveChanges();
         }
     }

@@ -12,6 +12,7 @@ namespace GameSharing.Model.ForumService
         public string Author { get; set; }
         public string Content { get; set; }
         public DateTime Created { get; set; }
+        public bool IsDeleted { get; set; }
 
         public Post(Guid id, string author, string content, DateTime created)
         {
@@ -19,7 +20,7 @@ namespace GameSharing.Model.ForumService
             Author = author ?? throw new ArgumentNullException(nameof(author));
             Content = content ?? throw new ArgumentNullException(nameof(content));
             Created = created;
+            IsDeleted= false;
         }
-        public Post() { }
     }
 }

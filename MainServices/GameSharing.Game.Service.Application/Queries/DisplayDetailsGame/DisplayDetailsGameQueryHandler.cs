@@ -29,13 +29,9 @@ namespace GameSharing.GameInfo.Service.Application.Queries.DisplayDetailsGame
         public async Task<DisplayDetailsGameQueryResponse> Handle(DisplayDetailsGameQuery request, CancellationToken cancellationToken)
         {
             var game = GameRepository.Get(request.Id);
-            //game.Rates = RateRepository.GetAllObjects(request.Id);
-            //game.Rate = game.Rates.Select(x => x.GameRate).Average();
-            //game.Comments = CommentRepository.GetAllObjects(request.Id);
-            ////game.Photos = PhotoRepository.GetAllObjects(request.Id);
+            game.Rate = RateRepository.GetAllObjects(request.Id).Select(x => x.GameRate).Average();
             return new DisplayDetailsGameQueryResponse(game);
         }
-        //return _context.Rates.Where(x => x.GameRate != null&&x.Game.Id==id).Select(x => x.GameRate).Average();
 
     }
 }

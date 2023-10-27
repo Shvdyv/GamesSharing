@@ -19,7 +19,6 @@ namespace GameSharing.Repository.Repositories
         }
         public Post Add(Post entity)
         {
-            entity.Id = new Guid();
             _context.Posts.Add(entity);
             _context.SaveChanges();
             return entity;
@@ -27,7 +26,13 @@ namespace GameSharing.Repository.Repositories
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var post = _context.Posts.FirstOrDefault(p => p.Id == id);
+            if (post != null) 
+            {
+                post.IsDeleted = true;
+                _context.Posts.Update(post);
+                _context.SaveChanges();
+            }           
         }
 
         public Post? Get(Guid guid)
