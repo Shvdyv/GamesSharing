@@ -1,4 +1,4 @@
-﻿using GameSharing.Common;
+using GameSharing.Common;
 using GameSharing.Model.GameService;
 using System;
 using System.Collections.Generic;
@@ -17,10 +17,10 @@ namespace GameSharing.GameInfo.Service.Application.Commands.AddGame
         public string Image { get; set; }
         public Guid Author { get; set; }
         public string File { get; set; }
-        public Rate Rate { get; set; }
         public Game Game { get; set; }
 
-        public AddGameCommand(string title, string description, string image, Guid author, string file, Rate rate)
+        public AddGameCommand(string title, string description, string image, Guid author, string file)
+
         {
             Id = Guid.NewGuid();
             Title = title;
@@ -28,7 +28,6 @@ namespace GameSharing.GameInfo.Service.Application.Commands.AddGame
             Image = image;
             Author = author;
             File = file;
-            Rate = rate;
         }
     }
 }
