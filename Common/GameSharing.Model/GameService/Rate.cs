@@ -9,15 +9,12 @@ namespace GameSharing.Model.GameService
 {
     public class Rate : DbDataEntity
     {
-        public Rate() { }
-
         public Rate(Guid id, Guid userId, float gameRate, Game game)
         {
             Id = id;
             UserId = userId;
             GameRate = gameRate;
             Game = game ?? throw new ArgumentNullException(nameof(game));
-
         }
 
         public Guid Id { get; set; }

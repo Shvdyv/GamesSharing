@@ -21,12 +21,10 @@ namespace GameSharing.Repository.Repositories
 
         public Comment Add(Comment entity)
         {
-            entity.Id = new Guid();
             _context.Comments.Add(entity);
             _context.SaveChanges();
             return entity;
         }
-
 
         public void Delete(Guid id)
         {
@@ -38,10 +36,9 @@ namespace GameSharing.Repository.Repositories
             }
             else
             {
-                throw new Exception("Can't find object to delete");
+                throw new ArgumentException("Can't find object to delete");
             }
         }
-
 
         public void Update(Comment entity)
         {

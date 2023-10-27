@@ -10,11 +10,13 @@ namespace GameSharing.GameInfo.Service.Application.Commands.AddPhotos
 {
     public class AddPhotosCommand : ICommand
     {
+        public Guid Id { get; set; }
         public string Photo { get; set; } // List, ICollection?
         public Game Game { get; set; }
 
         public AddPhotosCommand(string photo, Game game)
         {
+            Id = Guid.NewGuid();
             Photo = photo;
             Game = game;
         }

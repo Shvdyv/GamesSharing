@@ -20,9 +20,9 @@ namespace GameSharing.GameInfo.Service.Application.Commands.AddGame
         public Rate Rate { get; set; }
         public Game Game { get; set; }
 
-        public AddGameCommand(Guid id, string title, string description, string image, Guid author, string file, Rate rate)
+        public AddGameCommand(string title, string description, string image, Guid author, string file, Rate rate)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             Title = title;
             Description = description;
             Image = image;

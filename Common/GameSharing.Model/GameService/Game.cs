@@ -18,8 +18,7 @@ namespace GameSharing.Model.GameService
         public float Rate { get; set; }
         public int Counter { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public bool IsDeleted { get; set; }
-        
+        public bool IsDeleted { get; set; }     
         public virtual ICollection<Photo> Photos { get; set; }
 
         public Game(Guid id, string title, string description, string imageUrl, Guid author, string fileUrl)
@@ -32,9 +31,5 @@ namespace GameSharing.Model.GameService
             FileUrl = fileUrl ?? throw new ArgumentNullException(nameof(fileUrl));
             IsDeleted = false;
         }
-
-        public Game() 
-        {
-        } 
     }
 }

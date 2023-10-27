@@ -9,9 +9,6 @@ namespace GameSharing.Repository
     public class Database : DbContext
     {
         private readonly IConfiguration _configuration;
-        public Database()
-        {
-        }
 
         public Database(IConfiguration configuration)
         {

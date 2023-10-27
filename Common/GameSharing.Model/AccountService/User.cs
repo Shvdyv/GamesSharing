@@ -19,7 +19,5 @@ namespace GameSharing.Model.AccountService
             Email = email ?? throw new ArgumentNullException(nameof(email));
             Password = password ?? throw new ArgumentNullException(nameof(password));
         }
-
-        public User() { }
     }
 }

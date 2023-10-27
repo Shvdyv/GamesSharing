@@ -40,8 +40,6 @@ namespace GameSharing.Repository
             UserRepository = new UserRepository(_context);
             CommentRepository = new CommentRepository(_context);
             RateRepository = new RateRepository(_context);
-
-
         }
         public virtual UserRepository UserRepository { get; }
         public virtual PostRepository PostRepository { get; }

@@ -30,7 +30,7 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGame([FromBody] GameRepresentation gameRepresantation)
         {
-            await mediator.Send(new AddGameCommand(gameRepresantation.Id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File, gameRepresantation.Rate));
+            await mediator.Send(new AddGameCommand(gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File, gameRepresantation.Rate));
             return Ok();
         }
 
@@ -75,14 +75,14 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> CommentGame([FromBody] CommentGameRepresentation commentGameRepresentation)
         {
-            await mediator.Send(new CommentGameCommand(commentGameRepresentation.Id, commentGameRepresentation.Content, commentGameRepresentation.Author, commentGameRepresentation.Created, commentGameRepresentation.Game));
+            await mediator.Send(new CommentGameCommand(commentGameRepresentation.Content, commentGameRepresentation.Author, commentGameRepresentation.Created, commentGameRepresentation.Game));
             return Ok();
         }
 
         [HttpPost]
         public async Task<IActionResult> RateGame([FromBody] RateGameRepresentation rateGameRepresentation)
         {
-            await mediator.Send(new RateGameCommand(rateGameRepresentation.Id, rateGameRepresentation.UserId, rateGameRepresentation.Rate, rateGameRepresentation.Game));
+            await mediator.Send(new RateGameCommand(rateGameRepresentation.UserId, rateGameRepresentation.Rate, rateGameRepresentation.Game));
             return Ok();
         }
 
@@ -92,6 +92,5 @@ namespace GameSharing.GameInfo.Service.Controllers
             await mediator.Send(new AddPhotosCommand(addPhotosRepresentation.Photo, addPhotosRepresentation.Game));
             return Ok();
         }
-
     }
 }
