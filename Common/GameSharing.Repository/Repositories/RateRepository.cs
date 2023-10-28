@@ -27,16 +27,26 @@ namespace GameSharing.Repository.Repositories
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var result = _context.Rates.FirstOrDefault(r => r.Id == id);
+            if (result != null)
+            {
+                result.IsDeleted = true;
+                _context.Update(result);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Can't find object to delete");
+            }
         }
 
         public Rate? Get(Guid guid)
         {
-            return _context.Rates.FirstOrDefault(x => x.Id == guid);
+            return _context.Rates.FirstOrDefault(r => r.Id == guid);
         }
         public float? GetRate(Guid id)
         {
-            return _context.Rates.Where(x => x.GameRate != null&&x.Game.Id==id).Select(x => x.GameRate).Average();
+            return _context.Rates.Where(r => r.GameRate != null&&r.Game.Id==id).Select(r => r.GameRate).Average();
         }
 
         public IEnumerable<Rate> GetAll()
@@ -46,7 +56,7 @@ namespace GameSharing.Repository.Repositories
 
         public ICollection<Rate> GetAllObjects(Guid id)
         {
-            return _context.Rates.Where(x => x.GameRate != null && x.Game.Id == id).ToList();
+            return _context.Rates.Where(r => r.GameRate != null && r.Game.Id == id&&r.IsDeleted==false).ToList();
         }
 
         public IEnumerable<Rate> SearchBy(string paramName, string searchString)

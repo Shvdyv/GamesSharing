@@ -20,7 +20,7 @@ namespace GameSharing.Model.ForumService
             Author = author ?? throw new ArgumentNullException(nameof(author));
             Content = content ?? throw new ArgumentNullException(nameof(content));
             Created = created;
-            IsDeleted= false;
         }
+        public Post() { }
     }
 }

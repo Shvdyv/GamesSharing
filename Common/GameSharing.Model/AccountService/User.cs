@@ -12,6 +12,8 @@ namespace GameSharing.Model.AccountService
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public bool IsDeleted { get; set; }
+
         public User(Guid id, string name, string email, string password)
         {
             Id = id;
@@ -19,5 +21,7 @@ namespace GameSharing.Model.AccountService
             Email = email ?? throw new ArgumentNullException(nameof(email));
             Password = password ?? throw new ArgumentNullException(nameof(password));
         }
+
+        public User() { }
     }
 }

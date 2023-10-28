@@ -28,9 +28,10 @@ namespace GameSharing.Repository.Repositories
 
         public void Delete(Guid id)
         {
-            var result = _context.Comments.FirstOrDefault(x => x.Id == id);
+            var result = _context.Comments.FirstOrDefault(c => c.Id == id);
             if (result != null)
             {
+                result.IsDeleted = true;
                 _context.Comments.Remove(result);
                 _context.SaveChanges();
             }
@@ -47,17 +48,17 @@ namespace GameSharing.Repository.Repositories
 
         Comment? IRepository<Comment>.Get(Guid id)
         {
-            return _context.Comments.FirstOrDefault(x => x.Id == id);
+            return _context.Comments.FirstOrDefault(c => c.Id == id);
         }
 
         IEnumerable<Comment> IRepository<Comment>.GetAll()
         {
-            return _context.Comments.ToList();
+            return _context.Comments.Where(c => c.IsDeleted == false).ToList();
         }
 
         ICollection<Comment> IRepository<Comment>.GetAllObjects(Guid id)
         {
-            return _context.Comments.Where(x=>x.Game.Id==id).ToList();
+            return _context.Comments.Where(c=>c.Game.Id==id && c.IsDeleted == false).ToList();
         }
 
         IEnumerable<Comment> IRepository<Comment>.SearchBy(string paramName, string searchString)
