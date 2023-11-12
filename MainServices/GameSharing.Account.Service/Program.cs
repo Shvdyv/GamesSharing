@@ -1,12 +1,20 @@
+using GameSharing.Repository.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using System.Configuration;
+using static GameSharing.Repository.Interfaces.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+builder.Services.AddSingleton<IRepository<GameSharing.Model.AccountService.Role>>(new RoleRepository(new GameSharing.Repository.Database(builder.Configuration)));
+builder.Services.AddSingleton<IRepository<GameSharing.Model.AccountService.User>>(new UserRepository(new GameSharing.Repository.Database(builder.Configuration)));
 
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
         options => builder.Configuration.Bind("CookieSettings", options));
 

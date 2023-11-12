@@ -31,5 +31,6 @@ namespace GameSharing.Repository
         public virtual DbSet<Photo> Photos { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Rate> Rates { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
     }
 }
