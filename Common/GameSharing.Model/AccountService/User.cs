@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GameSharing.Model.GameService;
+using GameSharing.Model.Prototype;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace GameSharing.Model.AccountService
 {
-    public class User
+    public class User : DbDataEntity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public bool IsDeleted { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
 
         public User(Guid id, string name, string email, string password)
         {
@@ -20,8 +22,8 @@ namespace GameSharing.Model.AccountService
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Email = email ?? throw new ArgumentNullException(nameof(email));
             Password = password ?? throw new ArgumentNullException(nameof(password));
-        }
 
-        public User() { }
+            IsDeleted = false;
+        }
     }
 }
