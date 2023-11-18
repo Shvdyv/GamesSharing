@@ -104,7 +104,7 @@ namespace GameSharing.Account.Service.Controllers
         // a sam NetAuthService można zaimplementować przez dependencyInjection do mikroserwisów - to co jest tutaj zrobione jest wyłącznie w celu demnostracji
 
         [HttpPost]
-        public async Task<IActionResult> Authenticate(string token)
+        public async Task<IActionResult> AuthenticateByToken(string token)
         {
             NetAuthService.AuthService auth = new AuthService(_context);
             var user = auth.Login(token);
