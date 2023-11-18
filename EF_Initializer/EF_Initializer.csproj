@@ -21,6 +21,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\GameSharing.Repository\GameSharing.Repository.csproj" />
+    <ProjectReference Include="..\NetAuthService\NetAuthService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
-using EF_Initializer.Services;
 using GameSharing.Repository;
+using NetAuthService;
 
 namespace EF_Initializer.Controllers
 {
@@ -22,6 +22,14 @@ namespace EF_Initializer.Controllers
 
         public IActionResult Index()
         {
+            if (!_context.Users.Any())
+            {
+                _context.Roles.Add(new GameSharing.Model.AccountService.Role { Id = Guid.NewGuid(), Name = "Admin" });
+                _context.Users.Add(new GameSharing.Model.AccountService.User { Id = Guid.NewGuid(), Name = "Admin", Email = "admin@admin.com", Password = "Admin" });
+                _context.SaveChanges();
+                _context.UserRoles.Add(new GameSharing.Model.AccountService.UserRole { Id = Guid.NewGuid(), User = _context.Users.First(), Role = _context.Roles.First() });
+                _context.SaveChanges();
+            }
             return View();
         }
 
@@ -34,6 +42,12 @@ namespace EF_Initializer.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [HttpGet]
+        public async Task<IActionResult> LoginAsync()
+        {
+
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> LoginAsync(string login, string password)

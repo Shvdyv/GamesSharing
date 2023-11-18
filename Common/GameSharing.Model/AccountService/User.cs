@@ -13,12 +13,13 @@ namespace GameSharing.Model.AccountService
         public string Email { get; set; }
         public string Password { get; set; }
         public virtual ICollection<UserRole> Roles { get; set; }
-        public User(Guid id, string name, string email, string password)
-        {
-            Id = id;
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Email = email ?? throw new ArgumentNullException(nameof(email));
-            Password = password ?? throw new ArgumentNullException(nameof(password));
-        }
+        public string? AuthToken { get; set; }
+        //public User(Guid id, string name, string email, string password)
+        //{
+        //    Id = id;
+        //    Name = name ?? throw new ArgumentNullException(nameof(name));
+        //    Email = email ?? throw new ArgumentNullException(nameof(email));
+        //    Password = password ?? throw new ArgumentNullException(nameof(password));
+        //}
     }
 }

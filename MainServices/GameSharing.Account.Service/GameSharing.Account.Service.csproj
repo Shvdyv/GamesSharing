@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\GameSharing.Common\GameSharing.Common.csproj" />
+    <ProjectReference Include="..\..\NetAuthService\NetAuthService.csproj" />
     <ProjectReference Include="..\GameSharing.Account.Service.Application\GameSharing.Account.Service.Application.csproj" />
   </ItemGroup>
 
