@@ -20,9 +20,10 @@ namespace GameSharing.Account.Service.Controllers
         private readonly IMediator mediator;
         private readonly Database _context;
 
-        public AccountController(IMediator mediator)
+        public AccountController(IMediator mediator,Database database)
         {
             this.mediator = mediator;
+            _context = database;
         }
 
         private bool ValidateLogin(string userName, string password)
@@ -91,7 +92,7 @@ namespace GameSharing.Account.Service.Controllers
                 var claims = auth.GetClaims(user);
                 var principal = new ClaimsPrincipal(claims);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                return Ok();
+                return Ok(new { token = user.AuthToken});
             }
             return StatusCode(403);
         }

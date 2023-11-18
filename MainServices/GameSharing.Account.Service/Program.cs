@@ -1,32 +1,31 @@
+using GameSharing.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllersWithViews();
+#if DEBUG
+var connectionString = builder.Configuration.GetConnectionString("System");
+#else
+var connectionString = builder.Configuration.GetConnectionString("PRODUKCJA");
+#endif
 
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-        options => builder.Configuration.Bind("CookieSettings", options));
-
-    builder.Services.AddMvc();
-    //builder.Services.
-
-    //builder.Services.AddAuthentication()
-    //    .AddCookie(options =>
-    //    {
-    //        options.AccessDeniedPath = "/account/denied";
-    //        options.LoginPath = "/account/login";
-    //    });
-
-    //builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureMyCookie>();
-
-
-    
-
-
-
+builder.Services.AddDbContext<Database>(x => x.UseSqlServer(connectionString));
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthorization();
+builder.Services.AddAntiforgery();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Home/Login";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+    options.LoginPath = "/Home/Login";
+    //options.Cookie.Name = "GamesSharing";
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -52,6 +51,11 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials());
 
 app.MapControllers();
 

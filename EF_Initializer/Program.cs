@@ -28,7 +28,7 @@ var connectionString = builder.Configuration.GetConnectionString("PRODUKCJA");
                 options.AccessDeniedPath = "/Home/Login";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 options.LoginPath = "/Home/Login";
-                options.Cookie.Name = "GamesSharing";
+                //options.Cookie.Name = "GamesSharing";
             });
             var app = builder.Build();
             // Configure the HTTP request pipeline.
