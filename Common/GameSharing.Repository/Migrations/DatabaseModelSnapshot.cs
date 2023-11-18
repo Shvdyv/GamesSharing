@@ -22,6 +22,21 @@ namespace GameSharing.Repository.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GameSharing.Model.AccountService.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+                });
+
             modelBuilder.Entity("GameSharing.Model.AccountService.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -45,6 +60,27 @@ namespace GameSharing.Repository.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("GameSharing.Model.AccountService.UserRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRole");
+                });
+
             modelBuilder.Entity("GameSharing.Model.ForumService.Post", b =>
                 {
                     b.Property<Guid>("Id")
@@ -61,6 +97,9 @@ namespace GameSharing.Repository.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -174,6 +213,25 @@ namespace GameSharing.Repository.Migrations
                     b.ToTable("Rates");
                 });
 
+            modelBuilder.Entity("GameSharing.Model.AccountService.UserRole", b =>
+                {
+                    b.HasOne("GameSharing.Model.AccountService.Role", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GameSharing.Model.AccountService.User", "User")
+                        .WithMany("Roles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("GameSharing.Model.GameService.Comment", b =>
                 {
                     b.HasOne("GameSharing.Model.GameService.Game", "Game")
@@ -205,6 +263,11 @@ namespace GameSharing.Repository.Migrations
                         .IsRequired();
 
                     b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("GameSharing.Model.AccountService.User", b =>
+                {
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("GameSharing.Model.GameService.Game", b =>

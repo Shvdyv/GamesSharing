@@ -11,13 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
         options => builder.Configuration.Bind("CookieSettings", options));
 
     builder.Services.AddMvc();
+    //builder.Services.
 
-    builder.Services.AddAuthentication()
-        .AddCookie(options =>
-        {
-            options.AccessDeniedPath = "/account/denied";
-            options.LoginPath = "/account/login";
-        });
+    //builder.Services.AddAuthentication()
+    //    .AddCookie(options =>
+    //    {
+    //        options.AccessDeniedPath = "/account/denied";
+    //        options.LoginPath = "/account/login";
+    //    });
 
     //builder.Services.AddSingleton<IConfigureOptions<CookieAuthenticationOptions>, ConfigureMyCookie>();
 

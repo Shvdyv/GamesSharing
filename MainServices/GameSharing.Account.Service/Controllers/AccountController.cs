@@ -47,7 +47,7 @@ namespace GameSharing.Account.Service.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim("user", userName),
-                    new Claim(nameof(role), role)
+                    new Claim("role", role)
                 };
 
                 await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));

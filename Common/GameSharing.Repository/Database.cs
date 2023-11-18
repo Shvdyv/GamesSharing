@@ -9,21 +9,33 @@ namespace GameSharing.Repository
     public class Database : DbContext
     {
         private readonly IConfiguration _configuration;
-
-        public Database(IConfiguration configuration)
-        {
-            _configuration = configuration;
-            this.Database.Migrate();
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public Database(DbContextOptions<Database> options, IConfiguration configuration) : base(options)
         {
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            var configuration = builder.Build();
-            string connectionString = configuration.GetConnectionString("Local");
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            // Build the configuration
+            IConfiguration config = builder.Build();
+            _configuration = config;
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var connectionString = _configuration.GetConnectionString("Debug")
+                                   ?? throw new Exception("Invalid connection string name.");
             optionsBuilder.UseSqlServer(connectionString);
         }
+        //        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //        {
+        //            var builder = new ConfigurationBuilder()
+        //                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+        //            var configuration = builder.Build();
+        //#if DEBUG
+        //            string connectionString = configuration.GetConnectionString("Debug");
+        //#else
+        //            string connectionString = configuration.GetConnectionString("Local");
+        //#endif
+        //            optionsBuilder.UseSqlServer(connectionString);
+        //        }
 
         public virtual DbSet<Game> Games { get; set; }
         public virtual DbSet<User> Users { get; set; }

@@ -18,22 +18,23 @@ namespace GameSharing.Repository
         /// </summary>
         public Repository()
         {
-            var builder = new ConfigurationBuilder()
-            .AddJsonFile("developer_settings.json", optional: false, reloadOnChange: true);
-            var configuration = builder.Build();
-            new Repository(configuration);
-
+            throw new Exception("Ma się się inicjować z pliku conf");
         }
 
         public Repository(IConfiguration configuration)
         {
-            string connectionString = configuration.GetConnectionString("Local");
+
+#if DEBUG
+            string connectionString = configuration.GetConnectionString("Debug");
+#else
+                        string connectionString = configuration.GetConnectionString("Local");
+#endif
+
+
             var builder = new DbContextOptionsBuilder().UseSqlServer(connectionString);
             _configuration = configuration;
             var options = new DbContextOptions<Database>();
-            _context = new Database(configuration);
-
-
+            _context = new Database(options, configuration);
             PostRepository = new PostRepository(_context);
             PhotoRepository = new PhotoRepository(_context);
             GameRepository = new GameRepository(_context);

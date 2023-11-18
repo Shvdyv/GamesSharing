@@ -1,5 +1,6 @@
 ﻿using GameSharing.Model.AccountService;
 using GameSharing.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace GameSharing.Repository.Repositories
 
         public User? Get(Guid guid)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == guid);
+            return _context.Users.Include(x=>x.Roles).ThenInclude(x=>x.Role).FirstOrDefault(x => x.Id == guid);
         }
 
         public IEnumerable<User> GetAll()
