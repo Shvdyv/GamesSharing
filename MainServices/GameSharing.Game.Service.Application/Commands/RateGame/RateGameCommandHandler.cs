@@ -20,8 +20,8 @@ namespace GameSharing.GameInfo.Service.Application.Commands.RateGame
         }
         public Task Handle(RateGameCommand request, CancellationToken cancellationToken)
         {
-            var rate = new Rate(request.Id, request.UserId, request.Rate, request.Game);
-            RateRepository.Add(rate);
+            //var rate = new Rate(request.Id, request.UserId, request.Rate, request.Game);
+            //RateRepository.Add(rate);
             return Task.CompletedTask;
         }
     }

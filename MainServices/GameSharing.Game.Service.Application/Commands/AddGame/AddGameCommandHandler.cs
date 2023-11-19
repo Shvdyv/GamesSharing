@@ -27,8 +27,8 @@ namespace GameSharing.GameInfo.Service.Application.Commands.AddGame
 
         Task IRequestHandler<AddGameCommand>.Handle(AddGameCommand request, CancellationToken cancellationToken)
         {
-            var game = new Game(request.Id, request.Title, request.Description, request.Image, request.Author, request.File);
-            GameRepository.Add(game);
+            //var game = new Game(request.Id, request.Title, request.Description, request.Image, request.Author, request.File);
+            //GameRepository.Add(game);
             return Task.CompletedTask;
         }
     }
