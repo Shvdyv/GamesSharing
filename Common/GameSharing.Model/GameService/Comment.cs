@@ -14,17 +14,14 @@ namespace GameSharing.Model.GameService
         public DateTime Created { get; set; }
         public virtual Game Game { get; set; }
         public bool IsDeleted { get; set; }
-
-        public Comment(Guid id, Guid author, string content, DateTime created, Game game)
-        {
-            Id = id;
-            Author = author;
-            Content = content ?? throw new ArgumentNullException(nameof(content));
-            Created = created;
-            Game = game ?? throw new ArgumentNullException(nameof(game));
-            IsDeleted = false;
-        }
-
-       
+        //public Comment(Guid id, Guid author, string content, DateTime created, Game game)
+        //{
+        //    Id = id;
+        //    Author = author;
+        //    Content = content ?? throw new ArgumentNullException(nameof(content));
+        //    Created = created;
+        //    Game = game ?? throw new ArgumentNullException(nameof(game));
+        //    IsDeleted = false;
+        //}
     }
 }
