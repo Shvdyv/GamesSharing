@@ -15,11 +15,13 @@ namespace GameSharing.Model.GameService
         //    UserId = userId;
         //    GameRate = gameRate;
         //    Game = game ?? throw new ArgumentNullException(nameof(game));
+        //    IsDeleted = false;
         //}
 
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public float GameRate { get; set; }
         public virtual Game Game { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

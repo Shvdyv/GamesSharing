@@ -32,17 +32,21 @@ namespace GameSharing.Repository.Repositories
                 post.IsDeleted = true;
                 _context.Posts.Update(post);
                 _context.SaveChanges();
-            }           
+            }
+            else
+            {
+                throw new ArgumentException("Can't find object to delete");
+            }
         }
 
         public Post? Get(Guid guid)
         {
-            return _context.Posts.FirstOrDefault(x => x.Id == guid);
+            return _context.Posts.FirstOrDefault(p => p.Id == guid);
         }
 
         public IEnumerable<Post> GetAll()
         {
-            return _context.Posts.ToList();
+            return _context.Posts.Where(p => p.IsDeleted == false).ToList();
         }
 
         public IEnumerable<Post> SearchBy(string paramName, string searchString)

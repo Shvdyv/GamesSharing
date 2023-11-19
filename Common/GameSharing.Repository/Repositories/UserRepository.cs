@@ -28,9 +28,10 @@ namespace GameSharing.Repository.Repositories
 
         public void Delete(Guid id)
         {
-            var result = _context.Users.FirstOrDefault(x => x.Id == id);
+            var result = _context.Users.FirstOrDefault(u => u.Id == id);
             if (result != null)
             {
+                result.IsDeleted = true;
                 _context.Users.Remove(result);
                 _context.SaveChanges();
             }

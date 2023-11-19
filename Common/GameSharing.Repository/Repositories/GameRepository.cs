@@ -26,10 +26,10 @@ namespace GameSharing.Repository.Repositories
 
         public void Delete(Guid id)
         {
-            var result = _context.Games.FirstOrDefault(x => x.Id == id);
+            var result = _context.Games.FirstOrDefault(g => g.Id == id);
             if (result != null)
             {
-                result.IsDeleted = true;
+                result.IsDeleted = true; // we wszystkich repo
                 _context.Update(result);
                 _context.SaveChanges();
             }
@@ -41,12 +41,12 @@ namespace GameSharing.Repository.Repositories
 
         public Game? Get(Guid guid)
         {
-            return _context.Games.FirstOrDefault(x => x.Id == guid&&x.IsDeleted==false);
+            return _context.Games.FirstOrDefault(g => g.Id == guid&&g.IsDeleted==false);
         }
 
         public IEnumerable<Game> GetAll()
         {
-            return _context.Games.Where(x=>x.IsDeleted==false).ToList();
+            return _context.Games.Where(g=>g.IsDeleted==false).ToList(); // wszystkie getAll na false
         }
 
         public IEnumerable<Game> SearchBy(string paramName, string searchString)
@@ -58,7 +58,7 @@ namespace GameSharing.Repository.Repositories
             {
                 case "string":
                     result = _context.Games
-                        .Where(c => property.GetValue(c).ToString().Contains(searchString))
+                        .Where(g => property.GetValue(g).ToString().Contains(searchString))
                         .ToList();
                     break;
                 default: throw new NotImplementedException();

@@ -32,17 +32,17 @@ namespace GameSharing.Repository.Repositories
 
         public Photo? Get(Guid id)
         {
-            return _context.Photos.FirstOrDefault(x => x.Id == id);
+            return _context.Photos.FirstOrDefault(p => p.Id == id);
         }
 
         public IEnumerable<Photo> GetAll()
         {
-            return _context.Photos.ToList();
+            return _context.Photos.Where(p => p.IsDeleted == false).ToList();
         }
 
         public ICollection<Photo> GetAllObjects(Guid id)
         {
-            return _context.Photos.Where(x=>x.Id==id).ToList();
+            return _context.Photos.Where(p=>p.Id==id && p.IsDeleted == false).ToList();
         }
 
         public IEnumerable<Photo> SearchBy(string paramName, string searchString)

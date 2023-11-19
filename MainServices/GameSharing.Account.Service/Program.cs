@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Configuration;
+using static GameSharing.Repository.Interfaces.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
