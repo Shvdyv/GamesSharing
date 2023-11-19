@@ -19,8 +19,8 @@ namespace GameSharing.Forum.Service.Application.Commands.AddPost
         }
         public Task Handle(AddPostCommand request, CancellationToken cancellationToken)
         {
-            var post = new Post(request.Id, request.Author, request.Content, request.Created);
-            PostRepository.Add(post);
+            //var post = new Post(request.Id, request.Author, request.Content, request.Created);
+            //PostRepository.Add(post);
             return Task.CompletedTask;
         }
     }
