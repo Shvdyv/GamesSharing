@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using static GameSharing.Repository.Interfaces.IRepository;
@@ -57,6 +58,22 @@ namespace GameSharing.Repository.Repositories
         }
 
         public void Update(User entity)
+        {
+            throw new NotImplementedException();
+        }
+        public User Login(string login, string password)
+        {
+            throw new NotImplementedException();
+        }
+        public User GetUser(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+        public User Login(string Token)
+        {
+            throw new NotImplementedException();
+        }
+        public ClaimsIdentity GetClaims(User user)
         {
             throw new NotImplementedException();
         }

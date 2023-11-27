@@ -31,11 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Forum.Service",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameSharing.Forum.Service.Application", "MainServices\GameSharing.Forum.Service.Application\GameSharing.Forum.Service.Application.csproj", "{AD4ED833-A286-4314-ABE2-A842498F1596}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NaChujMiToProvider", "NaChujMiToProvider", "{98B6DA81-7F9C-487A-AFF9-4A3E2A8D59AB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestDemo", "TestDemo", "{98B6DA81-7F9C-487A-AFF9-4A3E2A8D59AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EF_Initializer", "EF_Initializer\EF_Initializer.csproj", "{F5B0A105-EFEF-449A-9734-1D40D911C153}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetAuthService", "NetAuthService\NetAuthService.csproj", "{A20DEB5D-AB16-4676-94DF-11F8C60531B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetAuthService", "NetAuthService\NetAuthService.csproj", "{A20DEB5D-AB16-4676-94DF-11F8C60531B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

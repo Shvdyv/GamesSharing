@@ -1,9 +1,12 @@
-﻿using GameSharing.Model.GameService;
+﻿using GameSharing.Model.AccountService;
+using GameSharing.Model.GameService;
 using GameSharing.Repository.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using static GameSharing.Repository.Interfaces.IRepository;
@@ -62,6 +65,22 @@ namespace GameSharing.Repository.Repositories
         }
 
         IEnumerable<Comment> IRepository<Comment>.SearchBy(string paramName, string searchString)
+        {
+            throw new NotImplementedException();
+        }
+        public Comment Login(string login, string password)
+        {
+            throw new NotImplementedException();
+        }
+        public Comment GetUser(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+        public Comment Login(string Token)
+        {
+            throw new NotImplementedException();
+        }
+        public ClaimsIdentity GetClaims(User user)
         {
             throw new NotImplementedException();
         }

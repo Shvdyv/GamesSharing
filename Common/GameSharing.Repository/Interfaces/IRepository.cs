@@ -1,7 +1,9 @@
-﻿using GameSharing.Model.GameService;
+﻿using GameSharing.Model.AccountService;
+using GameSharing.Model.GameService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +39,10 @@ namespace GameSharing.Repository.Interfaces
             /// </summary>
             /// <param name="entity"></param>
             void Delete(Guid id);
+            T Login(string login, string password);
+            T GetUser(Guid id);
+            T Login(string Token);
+            ClaimsIdentity GetClaims(User user);
         }
 
     }

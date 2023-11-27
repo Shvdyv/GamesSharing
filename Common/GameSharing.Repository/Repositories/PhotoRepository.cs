@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using static GameSharing.Repository.Interfaces.IRepository;
+using GameSharing.Model.AccountService;
+using System.Security.Claims;
 
 namespace GameSharing.Repository.Repositories
 {
@@ -51,6 +53,23 @@ namespace GameSharing.Repository.Repositories
         }
 
         public void Update(Photo entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Photo Login(string login, string password)
+        {
+            throw new NotImplementedException();
+        }
+        public Photo GetUser(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+        public Photo Login(string Token)
+        {
+            throw new NotImplementedException();
+        }
+        public ClaimsIdentity GetClaims(User user)
         {
             throw new NotImplementedException();
         }
