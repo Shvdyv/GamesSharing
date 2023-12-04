@@ -20,10 +20,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
-//builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Game>>(new GameRepository(new GameSharing.Repository.Database(builder.Configuration)));
-//builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Comment>>(new CommentRepository(new GameSharing.Repository.Database(builder.Configuration)));
-//builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Photo>>(new PhotoRepository(new GameSharing.Repository.Database(builder.Configuration)));
-//builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Rate>>(new RateRepository(new GameSharing.Repository.Database(builder.Configuration)));
+builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Game>>(new GameRepository(new GameSharing.Repository.Database(builder.Configuration)));
+builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Comment>>(new CommentRepository(new GameSharing.Repository.Database(builder.Configuration)));
+builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Photo>>(new PhotoRepository(new GameSharing.Repository.Database(builder.Configuration)));
+builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Rate>>(new RateRepository(new GameSharing.Repository.Database(builder.Configuration)));
 builder.Services.AddCors(o => o.AddPolicy("NotSecure", builder =>
 {
     builder.AllowAnyOrigin()
@@ -31,14 +31,14 @@ builder.Services.AddCors(o => o.AddPolicy("NotSecure", builder =>
            .AllowAnyMethod();
 }));
 
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddGameCommandHandler).Assembly));
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(EditGameCommandHandler).Assembly));
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DeleteGameCommandHandler).Assembly));
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllGamesQueryHandler).Assembly));
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DisplayDetailsGameQueryHandler).Assembly));
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DownloadGameQueryHandler).Assembly));
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CommentGameCommandHandler).Assembly));
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RateGameCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddGameCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(EditGameCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DeleteGameCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetAllGamesQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DisplayDetailsGameQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DownloadGameQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CommentGameCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RateGameCommandHandler).Assembly));
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

@@ -21,15 +21,17 @@ namespace GameSharing.Model.GameService
         public bool IsDeleted { get; set; }     
         public virtual ICollection<Photo> Photos { get; set; }
 
-        //public Game(Guid id, string title, string description, string imageUrl, Guid author, string fileUrl)
-        //{
-        //    Id = id;
-        //    Title = title ?? throw new ArgumentNullException(nameof(title));
-        //    Description = description ?? throw new ArgumentNullException(nameof(description));
-        //    ImageUrl = imageUrl ?? throw new ArgumentNullException(nameof(imageUrl));
-        //    Author = author;
-        //    FileUrl = fileUrl ?? throw new ArgumentNullException(nameof(fileUrl));
-        //    IsDeleted = false;
-        //}
+        public Game(Guid id, string title, string description, string imageUrl, Guid author, string fileUrl)
+        {
+            Id = id;
+            Title = title ?? throw new ArgumentNullException(nameof(title));
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+            ImageUrl = imageUrl ?? throw new ArgumentNullException(nameof(imageUrl));
+            Author = author;
+            FileUrl = fileUrl ?? throw new ArgumentNullException(nameof(fileUrl));
+            IsDeleted = false;
+        }
+
+        public Game() { }
     }
 }
