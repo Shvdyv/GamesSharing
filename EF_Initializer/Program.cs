@@ -13,13 +13,13 @@ namespace EF_Initializer
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 #if DEBUG
-            var connectionString = builder.Configuration.GetConnectionString("System");
+            //var connectionString = builder.Configuration.GetConnectionString("System");
 #else
 var connectionString = builder.Configuration.GetConnectionString("PRODUKCJA");
 #endif
 
-            builder.Services.AddDbContext<Database>(x => x.UseSqlServer(connectionString));
-            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+            //builder.Services.AddDbContext<Database>(x => x.UseSqlServer(connectionString));
+            //builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             builder.Services.AddAuthorization();
             builder.Services.AddAntiforgery();

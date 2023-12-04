@@ -14,13 +14,14 @@ namespace GameSharing.Model.ForumService
         public DateTime Created { get; set; }
         public bool IsDeleted { get; set; }
 
-        //public Post(Guid id, string author, string content, DateTime created)
-        //{
-        //    Id = id;
-        //    Author = author ?? throw new ArgumentNullException(nameof(author));
-        //    Content = content ?? throw new ArgumentNullException(nameof(content));
-        //    Created = created;
-        //}
-        //public Post() { }
+        public Post(Guid id, string author, string content, DateTime created)
+        {
+            Id = id;
+            Author = author ?? throw new ArgumentNullException(nameof(author));
+            Content = content ?? throw new ArgumentNullException(nameof(content));
+            Created = created;
+        }
+
+        public Post() { }
     }
 }

@@ -19,6 +19,8 @@ namespace GameSharing.Repository.Repositories
         {
             _context = context;
         }
+
+
         public Game Add(Game entity)
         {
             _context.Games.Add(entity);

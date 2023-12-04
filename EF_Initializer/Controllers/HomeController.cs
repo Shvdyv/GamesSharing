@@ -14,11 +14,11 @@ namespace EF_Initializer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly Database _context;
 
-        public HomeController(ILogger<HomeController> logger, Database context)
-        {
-            _logger = logger;
-            _context = context;
-        }
+        //public HomeController(ILogger<HomeController> logger, Database context)
+        //{
+        //    _logger = logger;
+        //    _context = context;
+        //}
 
         public IActionResult Index()
         {

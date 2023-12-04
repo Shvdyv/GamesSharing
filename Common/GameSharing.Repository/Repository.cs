@@ -16,25 +16,30 @@ namespace GameSharing.Repository
         /// <summary>
         /// Use only for development
         /// </summary>
+        //public Repository()
+        //{
+        //    throw new Exception("Ma się się inicjować z pliku conf");
+        //}
+
         public Repository()
         {
-            throw new Exception("Ma się się inicjować z pliku conf");
+            var builder = new ConfigurationBuilder()
+            .AddJsonFile("developer_settings.json", optional: false, reloadOnChange: true);
+            var configuration = builder.Build();
+            new Repository(configuration);
+
         }
 
         public Repository(IConfiguration configuration)
         {
-
-#if DEBUG
-            string connectionString = configuration.GetConnectionString("Debug");
-#else
-                        string connectionString = configuration.GetConnectionString("Local");
-#endif
-
+            //string connectionString = configuration.GetConnectionString("Debug");
+             string connectionString = configuration.GetConnectionString("Local");
 
             var builder = new DbContextOptionsBuilder().UseSqlServer(connectionString);
             _configuration = configuration;
             var options = new DbContextOptions<Database>();
-            _context = new Database(options, configuration);
+            _context = new Database(configuration);
+
             PostRepository = new PostRepository(_context);
             PhotoRepository = new PhotoRepository(_context);
             GameRepository = new GameRepository(_context);

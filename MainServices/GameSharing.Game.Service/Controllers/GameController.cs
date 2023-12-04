@@ -16,6 +16,10 @@ using System.Xml.Linq;
 using GameSharing.GameInfo.Service.Application.Queries.GetAllGames;
 using GameSharing.Model.GameService;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace GameSharing.GameInfo.Service.Controllers
 {
@@ -29,6 +33,22 @@ namespace GameSharing.GameInfo.Service.Controllers
         public GameController(IMediator mediator)
         {
             this.mediator = mediator;
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AuthenticateByToken(string token)
+        {
+            NetAuthService.AuthService auth = new AuthService(_context);
+            var user = auth.Login(token);
+            if (user != null)
+            {
+                var claims = auth.GetClaims(user);
+                var principal = new ClaimsPrincipal(claims);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                return Ok();
+            }
+            return StatusCode(403);
         }
 
         [HttpPost]
