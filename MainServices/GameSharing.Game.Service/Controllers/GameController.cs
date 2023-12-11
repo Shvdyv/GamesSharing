@@ -20,12 +20,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using GameSharing.GameInfo.Service.Application.Queries.AuthenticateByToken;
 
 namespace GameSharing.GameInfo.Service.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class GameController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -36,18 +37,19 @@ namespace GameSharing.GameInfo.Service.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AuthenticateByToken(string token)
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> AuthenticateByToken(Guid token)
         {
-            NetAuthService.AuthService auth = new AuthService(_context);
-            var user = auth.Login(token);
-            if (user != null)
-            {
-                var claims = auth.GetClaims(user);
-                var principal = new ClaimsPrincipal(claims);
+            var claims = await mediator.Send(new AuthenticateByTokenQuery(token));
+            //NetAuthService.AuthService auth = new AuthService(_context);
+            //var user = auth.Login(token);
+            //if (user != null)
+            //{
+            //    var claims = auth.GetClaims(user);
+                var principal = new ClaimsPrincipal(claims.Claims);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 return Ok();
-            }
+            //}
             return StatusCode(403);
         }
 
@@ -55,7 +57,7 @@ namespace GameSharing.GameInfo.Service.Controllers
         public async Task<IActionResult> AddGame([FromBody] GameRepresentation gameRepresantation)
         {
             await mediator.Send(new AddGameCommand(gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File));
-            return Ok();
+            return Created("db", gameRepresantation);
         }
 
         [Route("{id}")]
@@ -66,22 +68,23 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> EditGame([FromBody] GameRepresentation gameRepresantation)
+        public async Task<IActionResult> EditGame([FromBody] GameRepresentation gameRepresantation, [FromRoute] Guid id)
         {
-            await mediator.Send(new EditGameCommand(gameRepresantation.Id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File));
+            await mediator.Send(new EditGameCommand(id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File));
             return Ok();
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllGames()
         {
             var result = await mediator.Send(new GetAllGamesQuery());
-            return Ok();
+            return Ok(result);
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [Route("{id}")]
         [HttpGet]
         public async Task<IActionResult> DisplayDetailsGame([FromRoute] Guid id)
@@ -90,7 +93,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [Route("{id}")]
         [HttpGet]
         public async Task<IActionResult> DownloadGame([FromRoute] Guid id, string file)

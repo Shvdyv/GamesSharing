@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using GameSharing.Account.Service.Application.Commands.Login;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using NetAuthService;
 using GameSharing.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using GameSharing.Account.Service.Application.Queries.AuthenticateByToken;
 
 namespace GameSharing.Account.Service.Controllers
 {
@@ -26,61 +28,12 @@ namespace GameSharing.Account.Service.Controllers
             _context = database;
         }
 
-        private bool ValidateLogin(string userName, string password)
-        {
-            return true;
-        }
-
-        private string DetermineUserRole(string userName)
-        {
-            if (userName == "admin")
-            {
-                return "admin";
-            }
-            else
-            {
-                return "user";
-            }
-        }
-
-        [HttpPost] // get ... from body
-        public async Task<IActionResult> Login(string userName, string password, string returnUrl = null)
-        {
-            //ViewData["ReturnUrl"] = returnUrl;
-
-            if (ValidateLogin(userName, password))
-            {
-                var role = DetermineUserRole(userName);
-                var claims = new List<Claim>
-                {
-                    new Claim("user", userName),
-                    new Claim("role", role)
-                };
-
-                await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
-
-                if (Url.IsLocalUrl(returnUrl))
-                {
-                    return Redirect(returnUrl);
-                }
-                else
-                {
-                    return Redirect("/");
-                }
-            }
-
-            return Ok();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
             return Redirect("/");
         }
-
-
-
 
         [HttpPost]
         public async Task<IActionResult> Authenticate(string login, string password)
@@ -103,20 +56,21 @@ namespace GameSharing.Account.Service.Controllers
         //
         // a sam NetAuthService można zaimplementować przez dependencyInjection do mikroserwisów - to co jest tutaj zrobione jest wyłącznie w celu demnostracji
 
-        [HttpPost]
-        public async Task<IActionResult> AuthenticateByToken(string token)
-        {
-            NetAuthService.AuthService auth = new AuthService(_context);
-            var user = auth.Login(token);
-            if (user != null)
-            {
-                var claims = auth.GetClaims(user);
-                var principal = new ClaimsPrincipal(claims);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                return Ok();
-            }
-            return StatusCode(403);
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> AuthenticateByToken(Guid token)
+        //{
+        //    var claims = await mediator.Send(new AuthenticateByTokenQuery(token));
+        //    //NetAuthService.AuthService auth = new AuthService(_context);
+        //    //var user = auth.Login(token);
+        //    //if (user != null)
+        //    //{
+        //    //    var claims = auth.GetClaims(user);
+        //    var principal = new ClaimsPrincipal(claims.Claims);
+        //        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        //        return Ok();
+        //    }
+        //    return StatusCode(403);
+        //}
 
 
 

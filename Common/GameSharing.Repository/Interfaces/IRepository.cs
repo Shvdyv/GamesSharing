@@ -41,7 +41,7 @@ namespace GameSharing.Repository.Interfaces
             void Delete(Guid id);
             T Login(string login, string password);
             T GetUser(Guid id);
-            T Login(string Token);
+            User Login(string Token);
             ClaimsIdentity GetClaims(User user);
         }
 

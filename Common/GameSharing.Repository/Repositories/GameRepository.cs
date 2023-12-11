@@ -1,6 +1,7 @@
 ﻿using GameSharing.Model.AccountService;
 using GameSharing.Model.GameService;
 using GameSharing.Repository.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -84,13 +85,24 @@ namespace GameSharing.Repository.Repositories
         {
             throw new NotImplementedException();
         }
-        public Game Login(string Token)
+        public User Login(string Token)
         {
-            throw new NotImplementedException();
+            var _return = _context.Users
+                .Include(x => x.Roles)
+                    .ThenInclude(x => x.Role)
+            .First(x => x.AuthToken.Equals(Token));
+            return _return;
         }
         public ClaimsIdentity GetClaims(User user)
         {
-            throw new NotImplementedException();
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaim(new Claim(ClaimTypes.Name, user.Name.ToString()));
+            identity.AddClaim(new Claim(ClaimTypes.Email, user.Email.ToString()));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+            identity.AddClaim(new Claim("Token", user.AuthToken ?? string.Empty));
+            foreach (var role in user.Roles)
+                identity.AddClaim(new Claim(ClaimTypes.Role, role.Role.Name));
+            return identity;
         }
     }
 }

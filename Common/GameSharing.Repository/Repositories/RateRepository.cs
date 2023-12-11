@@ -79,7 +79,7 @@ namespace GameSharing.Repository.Repositories
         {
             throw new NotImplementedException();
         }
-        public Rate Login(string Token)
+        public User Login(string Token)
         {
             throw new NotImplementedException();
         }

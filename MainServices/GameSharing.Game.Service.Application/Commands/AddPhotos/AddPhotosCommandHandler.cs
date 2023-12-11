@@ -22,8 +22,8 @@ namespace GameSharing.GameInfo.Service.Application.Commands.AddPhotos
 
         Task IRequestHandler<AddPhotosCommand>.Handle(AddPhotosCommand request, CancellationToken cancellationToken)
         {
-            //var photo = new Photo(request.Id, request.Photo, request.Game);
-            //PhotoRepository.Add(photo);
+            var photo = new Photo(request.Id, request.Photo, request.Game);
+            PhotoRepository.Add(photo);
             return Task.CompletedTask;
         }
     }

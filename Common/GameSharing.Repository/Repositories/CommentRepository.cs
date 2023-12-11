@@ -76,7 +76,7 @@ namespace GameSharing.Repository.Repositories
         {
             throw new NotImplementedException();
         }
-        public Comment Login(string Token)
+        public User Login(string Token)
         {
             throw new NotImplementedException();
         }

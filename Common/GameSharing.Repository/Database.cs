@@ -15,7 +15,7 @@ namespace GameSharing.Repository
         public Database(IConfiguration configuration)
         {
             _configuration = configuration;
-            this.Database.Migrate();
+            //this.Database.Migrate();
         }
         //public Database(DbContextOptions<Database> options, IConfiguration configuration) : base(options)
         //{
