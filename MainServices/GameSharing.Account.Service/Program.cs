@@ -17,6 +17,13 @@ builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddAuthorization();
 builder.Services.AddAntiforgery();
+builder.Services.AddCors(o => o.AddPolicy("NotSecure", builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyHeader()
+           .AllowAnyMethod();
+}));
+
 //builder.Services.ConfigureApplicationCookie(options =>
 //{
 //    options.AccessDeniedPath = "/Home/Login";

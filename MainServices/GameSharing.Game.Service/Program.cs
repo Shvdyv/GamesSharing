@@ -10,6 +10,11 @@ using GameSharing.GameInfo.Service.Application.Queries.DisplayDetailsGame;
 using GameSharing.GameInfo.Service.Application.Queries.DownloadGame;
 using GameSharing.GameInfo.Service.Application.Commands.CommentGame;
 using GameSharing.GameInfo.Service.Application.Commands.RateGame;
+using GameSharing.GameInfo.Service.Application.Commands.AddPhotos;
+using GameSharing.GameInfo.Service.Application.Commands.DeleteComment;
+using GameSharing.GameInfo.Service.Application.Commands.DeleteRate;
+using GameSharing.GameInfo.Service.Application.Queries.AuthenticateByToken;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +29,9 @@ builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Game>>(n
 builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Comment>>(new CommentRepository(new GameSharing.Repository.Database(builder.Configuration)));
 builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Photo>>(new PhotoRepository(new GameSharing.Repository.Database(builder.Configuration)));
 builder.Services.AddSingleton<IRepository<GameSharing.Model.GameService.Rate>>(new RateRepository(new GameSharing.Repository.Database(builder.Configuration)));
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthorization();
+builder.Services.AddAntiforgery();
 builder.Services.AddCors(o => o.AddPolicy("NotSecure", builder =>
 {
     builder.AllowAnyOrigin()
@@ -39,6 +47,10 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Displ
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DownloadGameQueryHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CommentGameCommandHandler).Assembly));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RateGameCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AddPhotosCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DeleteCommentCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DeleteRateCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AuthenticateByTokenQueryHandler).Assembly));
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -50,6 +62,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseCors(x => x
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true) // allow any origin
+               .AllowCredentials());
 app.MapControllers();
 app.Run();
 

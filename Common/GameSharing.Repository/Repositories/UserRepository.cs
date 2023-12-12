@@ -77,5 +77,9 @@ namespace GameSharing.Repository.Repositories
         {
             throw new NotImplementedException();
         }
+        public User Logout()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

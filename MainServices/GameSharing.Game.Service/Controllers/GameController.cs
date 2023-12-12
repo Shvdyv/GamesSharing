@@ -36,8 +36,8 @@ namespace GameSharing.GameInfo.Service.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin, User")]
+        [HttpGet]
+        //[Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> AuthenticateByToken(Guid token)
         {
             var claims = await mediator.Send(new AuthenticateByTokenQuery(token));
@@ -53,6 +53,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return StatusCode(403);
         }
 
+        //[Authorize(Roles = "Admin, User")]
         [HttpPost]
         public async Task<IActionResult> AddGame([FromBody] GameRepresentation gameRepresantation)
         {
@@ -60,6 +61,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Created("db", gameRepresantation);
         }
 
+        //[Authorize(Roles = "Admin")]
         [Route("{id}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteGame([FromRoute] Guid id)
@@ -68,6 +70,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        //[Authorize(Roles = "Admin, User")]
         [Route("{id}")]
         [HttpPut]
         public async Task<IActionResult> EditGame([FromBody] GameRepresentation gameRepresantation, [FromRoute] Guid id)
@@ -102,6 +105,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        //[Authorize(Roles = "Admin, User")]
         [HttpPost]
         public async Task<IActionResult> CommentGame([FromBody] CommentGameRepresentation commentGameRepresentation)
         {
@@ -109,6 +113,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        //[Authorize(Roles = "Admin, User")]
         [HttpPost]
         public async Task<IActionResult> RateGame([FromBody] RateGameRepresentation rateGameRepresentation)
         {
@@ -116,6 +121,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        //[Authorize(Roles = "Admin, User")]
         [HttpPost]
         public async Task<IActionResult> AddPhotos([FromBody] AddPhotosRepresentation addPhotosRepresentation)
         {
@@ -123,6 +129,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        //[Authorize(Roles = "Admin")]
         [Route("{id}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteRate([FromRoute] Guid id)
@@ -131,6 +138,7 @@ namespace GameSharing.GameInfo.Service.Controllers
             return Ok();
         }
 
+        //[Authorize(Roles = "Admin")]
         [Route("{id}")]
         [HttpDelete]
         public async Task<IActionResult> DeleteComment([FromRoute] Guid id)

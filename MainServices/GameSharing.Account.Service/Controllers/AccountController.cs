@@ -5,13 +5,15 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using GameSharing.Account.Service.Application.Commands.Login;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using NetAuthService;
 using GameSharing.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using GameSharing.Account.Service.Application.Queries.AuthenticateByToken;
+using GameSharing.Account.Service.Application.Queries.Authenticate;
+using GameSharing.Account.Service.Application.Commands.Logout;
+using GameSharing.Account.Service.Application.Commands.Register;
 
 namespace GameSharing.Account.Service.Controllers
 {
@@ -35,18 +37,20 @@ namespace GameSharing.Account.Service.Controllers
             return Redirect("/");
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Authenticate(string login, string password)
         {
-            NetAuthService.AuthService auth = new AuthService(_context);
-            var user = auth.Login(login, password);
-            if (user != null)
-            {
-                var claims = auth.GetClaims(user);
-                var principal = new ClaimsPrincipal(claims);
+            var claims = await mediator.Send(new AuthenticateQuery(login, password));
+            //NetAuthService.AuthService auth = new AuthService(_context);
+            //var user = auth.Login(login, password);
+            //if (user != null)
+            //{
+            //var claims = auth.GetClaims(user);
+                var principal = new ClaimsPrincipal(claims.Claims);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                return Ok(new { token = user.AuthToken});
-            }
+            //return Ok(new { token = user.AuthToken});
+            return Ok();
+            //}
             return StatusCode(403);
         }
         //Każdy kontroller musi mieć zaimplementowaną tą funkcje i jeżeli Api zwraca 403 powinno się to uruchomić dla każdego serwisu wtedy każdy serwis do requesta zwrotnego doda ciasteczka dla każdego serwisu (najlepiej je trzymać w localStorage) i będzie to wyglądało w:
@@ -56,41 +60,34 @@ namespace GameSharing.Account.Service.Controllers
         //
         // a sam NetAuthService można zaimplementować przez dependencyInjection do mikroserwisów - to co jest tutaj zrobione jest wyłącznie w celu demnostracji
 
-        //[HttpPost]
-        //public async Task<IActionResult> AuthenticateByToken(Guid token)
-        //{
-        //    var claims = await mediator.Send(new AuthenticateByTokenQuery(token));
-        //    //NetAuthService.AuthService auth = new AuthService(_context);
-        //    //var user = auth.Login(token);
-        //    //if (user != null)
-        //    //{
-        //    //    var claims = auth.GetClaims(user);
-        //    var principal = new ClaimsPrincipal(claims.Claims);
-        //        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-        //        return Ok();
-        //    }
-        //    return StatusCode(403);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> AuthenticateByToken(Guid token)
+        {
+            var claims = await mediator.Send(new AuthenticateByTokenQuery(token));
+            //NetAuthService.AuthService auth = new AuthService(_context);
+            //var user = auth.Login(token);
+            //if (user != null)
+            //{
+            //    var claims = auth.GetClaims(user);
+            var principal = new ClaimsPrincipal(claims.Claims);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            return Ok();
 
+            return StatusCode(403);
+        }
 
-
-        //[HttpPost]
-        //public async Task<IActionResult> Register()
-        //{
-        //    return Ok();
-        //}
-
-
-        //[HttpPut]
-        //public async Task<IActionResult> EditAccount()
-        //{
-        //    return Ok();
-        //}
-
-        //[HttpDelete]
-        //public async Task<IActionResult> DeleteAccount()
-        //{
-        //    return Ok();
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Register()
+        {
+            return Ok();
+        }
     }
+
+
+    //[HttpDelete]
+    //public async Task<IActionResult> DeleteAccount()
+    //{
+    //    return Ok();
+    //}
 }
+
