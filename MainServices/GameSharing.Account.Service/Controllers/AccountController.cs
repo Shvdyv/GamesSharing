@@ -14,6 +14,7 @@ using GameSharing.Account.Service.Application.Queries.AuthenticateByToken;
 using GameSharing.Account.Service.Application.Queries.Authenticate;
 using GameSharing.Account.Service.Application.Commands.Logout;
 using GameSharing.Account.Service.Application.Commands.Register;
+using GameSharing.Account.Service.Application.Commands.DeleteAccount;
 
 namespace GameSharing.Account.Service.Controllers
 {
@@ -76,18 +77,20 @@ namespace GameSharing.Account.Service.Controllers
             return StatusCode(403);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register()
+        //[HttpPost]
+        //public async Task<IActionResult> Register()
+        //{
+        //    await mediator.Send(new RegisterCommand());
+        //    return Ok();
+        //}
+
+        [Route("{id}")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAccount([FromRoute] Guid id)
         {
+            await mediator.Send(new DeleteAccountCommand(id));
             return Ok();
         }
     }
-
-
-    //[HttpDelete]
-    //public async Task<IActionResult> DeleteAccount()
-    //{
-    //    return Ok();
-    //}
 }
 

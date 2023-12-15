@@ -22,6 +22,7 @@ namespace GameSharing.Repository.Repositories
         public User Add(User entity)
         {
             entity.Id = new Guid();
+            entity.Roles.Add(_context.UserRoles.FirstOrDefault(r => r.Role.Name=="User"));
             _context.Users.Add(entity);
             _context.SaveChanges();
             return entity;

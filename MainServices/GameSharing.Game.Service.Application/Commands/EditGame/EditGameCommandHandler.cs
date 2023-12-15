@@ -20,7 +20,7 @@ namespace GameSharing.GameInfo.Service.Application.Commands.EditGame
         }
         public Task Handle(EditGameCommand request, CancellationToken cancellationToken)
         {
-            var game = new Game(request.Id, request.Title, request.Description, request.Image, request.Author, request.File);
+            var game = new Game(request.Id, request.Title, request.Description, request.Image, request.User, request.File);
             GameRepository.Update(game);
             return Task.CompletedTask;
         }

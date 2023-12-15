@@ -1,4 +1,5 @@
 ﻿using GameSharing.Common;
+using GameSharing.Model.AccountService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +15,16 @@ namespace GameSharing.GameInfo.Service.Application.Commands.EditGame
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
-        public Guid Author { get; set; }
+        public User User { get; set; }
         public string File { get; set; }
 
-        public EditGameCommand(Guid id, string title, string description, string image, Guid author, string file)
+        public EditGameCommand(Guid id, string title, string description, string image, User user, string file)
         {
             Id = id;
             Title = title;
             Description = description;
             Image = image;
-            Author = author;
+            User = user;
             File = file;
         }
     }

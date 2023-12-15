@@ -38,7 +38,6 @@ namespace GameSharing.Repository
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             var configuration = builder.Build();
             string connectionString = configuration.GetConnectionString("Local");
-            //string connectionString = configuration.GetConnectionString("Local");
             optionsBuilder.UseSqlServer(connectionString);
         }
 

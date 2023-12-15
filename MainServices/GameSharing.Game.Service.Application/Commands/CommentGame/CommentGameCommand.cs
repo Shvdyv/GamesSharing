@@ -1,4 +1,5 @@
 ﻿using GameSharing.Common;
+using GameSharing.Model.AccountService;
 using GameSharing.Model.GameService;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,15 @@ namespace GameSharing.GameInfo.Service.Application.Commands.CommentGame
     {
         public Guid Id { get; set; }
         public string Content { get; set; }
-        public Guid Author { get; set; }
+        public User User { get; set; }
         public DateTime Created { get; set; }
         public Game Game { get; set; } 
 
-        public CommentGameCommand(string content, Guid author, DateTime created, Game game)
+        public CommentGameCommand(string content, User user, DateTime created, Game game)
         {
             Id = Guid.NewGuid();
             Content = content;
-            Author = author;
+            User = user;
             Created = created;
             Game = game;
         }

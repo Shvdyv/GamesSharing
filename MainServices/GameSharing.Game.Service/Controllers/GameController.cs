@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using GameSharing.GameInfo.Service.Application.Queries.AuthenticateByToken;
+using GameSharing.Model.AccountService;
 
 namespace GameSharing.GameInfo.Service.Controllers
 {
@@ -29,6 +30,7 @@ namespace GameSharing.GameInfo.Service.Controllers
     //[Authorize]
     public class GameController : ControllerBase
     {
+        private User User { get; set; }
         private readonly IMediator mediator;
 
         public GameController(IMediator mediator)
@@ -40,15 +42,16 @@ namespace GameSharing.GameInfo.Service.Controllers
         //[Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> AuthenticateByToken(Guid token)
         {
-            var claims = await mediator.Send(new AuthenticateByTokenQuery(token));
+            var authenticateData = await mediator.Send(new AuthenticateByTokenQuery(token));
+            User = authenticateData.User;
             //NetAuthService.AuthService auth = new AuthService(_context);
             //var user = auth.Login(token);
             //if (user != null)
             //{
             //    var claims = auth.GetClaims(user);
-                var principal = new ClaimsPrincipal(claims.Claims);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-                return Ok();
+            var principal = new ClaimsPrincipal(authenticateData.Claims);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+            return Ok();
             //}
             return StatusCode(403);
         }
@@ -57,8 +60,8 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGame([FromBody] GameRepresentation gameRepresantation)
         {
-            await mediator.Send(new AddGameCommand(gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File));
-            return Created("db", gameRepresantation);
+            await mediator.Send(new AddGameCommand(gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, new User(Guid.NewGuid(), "user", "aga@aga.pl", "aga", Guid.NewGuid()), gameRepresantation.File));
+            return Created("dbgame", gameRepresantation);
         }
 
         //[Authorize(Roles = "Admin")]
@@ -75,7 +78,7 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPut]
         public async Task<IActionResult> EditGame([FromBody] GameRepresentation gameRepresantation, [FromRoute] Guid id)
         {
-            await mediator.Send(new EditGameCommand(id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, gameRepresantation.Author, gameRepresantation.File));
+            await mediator.Send(new EditGameCommand(id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, User, gameRepresantation.File));
             return Ok();
         }
 
@@ -101,7 +104,7 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpGet]
         public async Task<IActionResult> DownloadGame([FromRoute] Guid id, string file)
         {
-            var result = await mediator.Send(new DownloadGameQuery(id, file)); 
+            var result = await mediator.Send(new DownloadGameQuery(id, file));
             return Ok();
         }
 
@@ -109,8 +112,8 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> CommentGame([FromBody] CommentGameRepresentation commentGameRepresentation)
         {
-            await mediator.Send(new CommentGameCommand(commentGameRepresentation.Content, commentGameRepresentation.Author, commentGameRepresentation.Created, commentGameRepresentation.Game));
-            return Ok();
+            await mediator.Send(new CommentGameCommand(commentGameRepresentation.Content, User, commentGameRepresentation.Created, commentGameRepresentation.Game));
+            return Created("dbcomment", commentGameRepresentation); // wszystkie post + registerrepresantation
         }
 
         //[Authorize(Roles = "Admin, User")]

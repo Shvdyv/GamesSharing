@@ -1,4 +1,5 @@
-﻿using GameSharing.Model.Prototype;
+﻿using GameSharing.Model.AccountService;
+using GameSharing.Model.Prototype;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,15 @@ namespace GameSharing.Model.GameService
 {
     public class Comment : DbDataEntity
     {
-        public Guid Author { get; set; }
+        public virtual User User { get; set; }
         public string Content { get; set; }
         public DateTime Created { get; set; }
         public virtual Game Game { get; set; }
         public bool IsDeleted { get; set; }
-        public Comment(Guid id, Guid author, string content, DateTime created, Game game)
+        public Comment(Guid id, User user, string content, DateTime created, Game game)
         {
             Id = id;
-            Author = author;
+            User = user;
             Content = content ?? throw new ArgumentNullException(nameof(content));
             Created = created;
             Game = game ?? throw new ArgumentNullException(nameof(game));

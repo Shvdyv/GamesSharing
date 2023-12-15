@@ -48,7 +48,7 @@ namespace GameSharing.Repository.Repositories
             identity.AddClaim(new Claim(ClaimTypes.Name, user.Name.ToString()));
             identity.AddClaim(new Claim(ClaimTypes.Email, user.Email.ToString()));
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-            identity.AddClaim(new Claim("Token", user.AuthToken ?? string.Empty));
+            identity.AddClaim(new Claim("Token", user.AuthToken.ToString() ?? string.Empty));
             foreach (var role in user.Roles)
                 identity.AddClaim(new Claim(ClaimTypes.Role, role.Role.Name));
             return identity;

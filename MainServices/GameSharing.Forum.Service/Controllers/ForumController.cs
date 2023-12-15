@@ -9,7 +9,7 @@ namespace GameSharing.Forum.Service.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ForumController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -19,13 +19,14 @@ namespace GameSharing.Forum.Service.Controllers
             _mediator = mediator;
         }
 
+        //[AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddPost([FromBody] AddPostRepresantation addPostRepresantation)
         {
             await _mediator.Send(new AddPostCommand(addPostRepresantation.Author, addPostRepresantation.Content));
             return Ok();
         }
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> DisplayPosts()
         {
@@ -33,6 +34,7 @@ namespace GameSharing.Forum.Service.Controllers
             return Ok(result);
         }
 
+        //[Authorize(Roles = "Admin")]
         [Route("{id}")]
         [HttpDelete]
         public async Task<IActionResult> DeletePost([FromRoute] Guid id)

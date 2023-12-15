@@ -1,4 +1,5 @@
-﻿using GameSharing.Model.Prototype;
+﻿using GameSharing.Model.AccountService;
+using GameSharing.Model.Prototype;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace GameSharing.Model.GameService
         public string Title { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; } 
-        public Guid Author { get; set; }
+        public virtual User? User { get; set; }
         public string FileUrl { get; set; }
         public virtual ICollection<Rate> Rates { get; set; } 
         public float Rate { get; set; }
@@ -21,13 +22,13 @@ namespace GameSharing.Model.GameService
         public bool IsDeleted { get; set; }     
         public virtual ICollection<Photo> Photos { get; set; }
 
-        public Game(Guid id, string title, string description, string imageUrl, Guid author, string fileUrl)
+        public Game(Guid id, string title, string description, string imageUrl, User user, string fileUrl)
         {
             Id = id;
             Title = title ?? throw new ArgumentNullException(nameof(title));
             Description = description ?? throw new ArgumentNullException(nameof(description));
             ImageUrl = imageUrl ?? throw new ArgumentNullException(nameof(imageUrl));
-            Author = author;
+            User = user ?? throw new ArgumentNullException(nameof(user));
             FileUrl = fileUrl ?? throw new ArgumentNullException(nameof(fileUrl));
             IsDeleted = false;
         }

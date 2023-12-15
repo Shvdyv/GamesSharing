@@ -1,6 +1,7 @@
 ﻿using GameSharing.Common;
 using GameSharing.Model.AccountService;
 using GameSharing.Model.ForumService;
+using GameSharing.Model.GameService;
 using GameSharing.Repository.Repositories;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace GameSharing.Account.Service.Application.Commands.Register
         }
         public Task Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var user = new User(request.Id, request.Name, request.Email, request.Password);
+            var game = new Game();
+            var user = new User(request.Id, request.Name, request.Email, request.Password, request.AuthToken);
             UserRepository.Add(user);
             return Task.CompletedTask;
         }

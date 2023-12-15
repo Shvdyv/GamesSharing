@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameSharing.Model.AccountService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -10,9 +11,11 @@ namespace GameSharing.GameInfo.Service.Application.Queries.AuthenticateByToken
     public class AuthenticateByTokenQueryResponse
     {
         public ClaimsIdentity Claims { get; set; }
-        public AuthenticateByTokenQueryResponse(ClaimsIdentity claims)
+        public User User { get; set; }
+        public AuthenticateByTokenQueryResponse(ClaimsIdentity claims, User user)
         {
             Claims = claims;
+            User = user;
         }
     }
 }

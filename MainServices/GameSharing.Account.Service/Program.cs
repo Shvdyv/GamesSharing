@@ -1,4 +1,9 @@
-using GameSharing.Repository;
+using GameSharing.Account.Service.Application.Commands.Logout;
+using GameSharing.Account.Service.Application.Commands.Register;
+using GameSharing.Account.Service.Application.Queries.Authenticate;
+using GameSharing.Account.Service.Application.Queries.AuthenticateByToken;
+using GameSharing.Model.AccountService;
+using GameSharing.Repository.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +19,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddDbContext<Database>(x => x.UseSqlServer(connectionString));
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddSingleton<IRepository<GameSharing.Model.AccountService.User>>(new UserRepository(new GameSharing.Repository.Database(builder.Configuration)));
+builder.Services.AddSingleton<IRepository<GameSharing.Model.AccountService.Role>>(new RoleRepository(new GameSharing.Repository.Database(builder.Configuration)));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 builder.Services.AddAuthorization();
 builder.Services.AddAntiforgery();
@@ -61,6 +68,11 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials());
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(LogoutCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(RegisterCommandHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AuthenticateQueryHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(AuthenticateByTokenQueryHandler).Assembly));
 
 app.MapControllers();
 

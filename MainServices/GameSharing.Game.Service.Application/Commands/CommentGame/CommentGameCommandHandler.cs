@@ -20,7 +20,7 @@ namespace GameSharing.GameInfo.Service.Application.Commands.CommentGame
         }
         Task IRequestHandler<CommentGameCommand>.Handle(CommentGameCommand request, CancellationToken cancellationToken)
         {
-            var comment = new Comment(request.Id, request.Author, request.Content, request.Created, request.Game);
+            var comment = new Comment(request.Id, request.User, request.Content, request.Created, request.Game);
             CommentRepository.Add(comment);
             return Task.CompletedTask;
         }

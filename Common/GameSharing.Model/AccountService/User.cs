@@ -14,15 +14,18 @@ namespace GameSharing.Model.AccountService
         public string Email { get; set; }
         public string Password { get; set; }
         public virtual ICollection<UserRole> Roles { get; set; }
-        public string? AuthToken { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public Guid AuthToken { get; set; }
         public bool IsDeleted { get; set; }
-        public User(Guid id, string name, string email, string password)
+        public User(Guid id, string name, string email, string password, Guid authToken)
         {
             Id = id;
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Email = email ?? throw new ArgumentNullException(nameof(email));
             Password = password ?? throw new ArgumentNullException(nameof(password));
             IsDeleted = false;
+            AuthToken = authToken;
         }
 
         public User() { }
