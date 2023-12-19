@@ -13,7 +13,7 @@ namespace GameSharing.Model.GameService
         public string Title { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; } 
-        public virtual User? User { get; set; }
+        public virtual User User { get; set; }
         public string FileUrl { get; set; }
         public virtual ICollection<Rate> Rates { get; set; } 
         public float Rate { get; set; }

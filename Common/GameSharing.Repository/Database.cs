@@ -3,6 +3,7 @@ using GameSharing.Model.ForumService;
 using GameSharing.Model.GameService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Security.Cryptography.X509Certificates;
 
 namespace GameSharing.Repository
 {
@@ -39,6 +40,13 @@ namespace GameSharing.Repository
             var configuration = builder.Build();
             string connectionString = configuration.GetConnectionString("Local");
             optionsBuilder.UseSqlServer(connectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        {
+            modelBuilder.Entity<User>().HasMany(u => u.Games)
+                .WithOne(g => g.User)
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
         public virtual DbSet<Game> Games { get; set; }
