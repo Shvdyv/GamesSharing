@@ -6,15 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GameSharing.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateModelCreating : Migration
+    public partial class AddNoAction : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Games_Users_UserId",
-                table: "Games");
-
             migrationBuilder.AlterColumn<Guid>(
                 name: "UserId",
                 table: "Games",
@@ -24,23 +20,11 @@ namespace GameSharing.Repository.Migrations
                 oldClrType: typeof(Guid),
                 oldType: "uniqueidentifier",
                 oldNullable: true);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Games_Users_UserId",
-                table: "Games",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Games_Users_UserId",
-                table: "Games");
-
             migrationBuilder.AlterColumn<Guid>(
                 name: "UserId",
                 table: "Games",
@@ -48,13 +32,6 @@ namespace GameSharing.Repository.Migrations
                 nullable: true,
                 oldClrType: typeof(Guid),
                 oldType: "uniqueidentifier");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Games_Users_UserId",
-                table: "Games",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "Id");
         }
     }
 }

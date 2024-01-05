@@ -13,15 +13,15 @@ namespace GameSharing.GameInfo.Service.Application.Commands.CommentGame
     {
         public Guid Id { get; set; }
         public string Content { get; set; }
-        public User User { get; set; }
+        public string UserId { get; set; }
         public DateTime Created { get; set; }
         public Game Game { get; set; } 
 
-        public CommentGameCommand(string content, User user, DateTime created, Game game)
+        public CommentGameCommand(string content, string userId, DateTime created, Game game)
         {
             Id = Guid.NewGuid();
             Content = content;
-            User = user;
+            UserId = userId;
             Created = created;
             Game = game;
         }

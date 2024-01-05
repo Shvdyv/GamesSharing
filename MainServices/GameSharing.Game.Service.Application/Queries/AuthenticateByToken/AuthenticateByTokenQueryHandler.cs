@@ -15,7 +15,7 @@ namespace GameSharing.GameInfo.Service.Application.Queries.AuthenticateByToken
         {
             var user = GameRepository.Login(request.Token.ToString());
             var claims = GameRepository.GetClaims(user);
-            return new AuthenticateByTokenQueryResponse(claims, user);
+            return new AuthenticateByTokenQueryResponse(claims);
         }
     }
 }

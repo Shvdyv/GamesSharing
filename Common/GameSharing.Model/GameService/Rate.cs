@@ -1,4 +1,5 @@
 ﻿using GameSharing.Model.Prototype;
+using GameSharing.Model.AccountService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,15 @@ namespace GameSharing.Model.GameService
 {
     public class Rate : DbDataEntity
     {
-        public Guid UserId { get; set; }
+        public virtual User User { get; set; }
         public float GameRate { get; set; }
         public virtual Game Game { get; set; }
         public bool IsDeleted { get; set; }
 
-        public Rate(Guid id, Guid userId, float gameRate, Game game)
+        public Rate(Guid id, User user, float gameRate, Game game)
         {
             Id = id;
-            UserId = userId;
+            User = user;
             GameRate = gameRate;
             Game = game ?? throw new ArgumentNullException(nameof(game));
             IsDeleted = false;

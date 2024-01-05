@@ -30,7 +30,6 @@ namespace GameSharing.GameInfo.Service.Controllers
     //[Authorize]
     public class GameController : ControllerBase
     {
-        private User User { get; set; }
         private readonly IMediator mediator;
 
         public GameController(IMediator mediator)
@@ -43,7 +42,6 @@ namespace GameSharing.GameInfo.Service.Controllers
         public async Task<IActionResult> AuthenticateByToken(Guid token)
         {
             var authenticateData = await mediator.Send(new AuthenticateByTokenQuery(token));
-            User = authenticateData.User;
             //NetAuthService.AuthService auth = new AuthService(_context);
             //var user = auth.Login(token);
             //if (user != null)
@@ -60,7 +58,8 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGame([FromBody] GameRepresentation gameRepresantation)
         {
-            await mediator.Send(new AddGameCommand(gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, new User(Guid.NewGuid(), "user", "aga@aga.pl", "aga", Guid.NewGuid()), gameRepresantation.File));
+            var userId = HttpContext.User.Identities.First().Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value; // wszystkie commanda i endpointy z userem
+            await mediator.Send(new AddGameCommand(gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, userId, gameRepresantation.File));
             return Created("dbgame", gameRepresantation);
         }
 
@@ -78,7 +77,8 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPut]
         public async Task<IActionResult> EditGame([FromBody] GameRepresentation gameRepresantation, [FromRoute] Guid id)
         {
-            await mediator.Send(new EditGameCommand(id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, User, gameRepresantation.File));
+            var userId = HttpContext.User.Identities.First().Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            await mediator.Send(new EditGameCommand(id, gameRepresantation.Title, gameRepresantation.Description, gameRepresantation.Image, userId, gameRepresantation.File));
             return Ok();
         }
 
@@ -112,16 +112,18 @@ namespace GameSharing.GameInfo.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> CommentGame([FromBody] CommentGameRepresentation commentGameRepresentation)
         {
-            await mediator.Send(new CommentGameCommand(commentGameRepresentation.Content, User, commentGameRepresentation.Created, commentGameRepresentation.Game));
-            return Created("dbcomment", commentGameRepresentation); // wszystkie post + registerrepresantation
+            var userId = HttpContext.User.Identities.First().Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            await mediator.Send(new CommentGameCommand(commentGameRepresentation.Content, userId, commentGameRepresentation.Created, commentGameRepresentation.Game));
+            return Created("dbcomment", commentGameRepresentation);
         }
 
         //[Authorize(Roles = "Admin, User")]
         [HttpPost]
         public async Task<IActionResult> RateGame([FromBody] RateGameRepresentation rateGameRepresentation)
         {
-            await mediator.Send(new RateGameCommand(rateGameRepresentation.UserId, rateGameRepresentation.Rate, rateGameRepresentation.Game));
-            return Ok();
+            var userId = HttpContext.User.Identities.First().Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            await mediator.Send(new RateGameCommand(userId, rateGameRepresentation.Rate, rateGameRepresentation.Game));
+            return Created("dbrate", rateGameRepresentation);
         }
 
         //[Authorize(Roles = "Admin, User")]
@@ -129,7 +131,7 @@ namespace GameSharing.GameInfo.Service.Controllers
         public async Task<IActionResult> AddPhotos([FromBody] AddPhotosRepresentation addPhotosRepresentation)
         {
             await mediator.Send(new AddPhotosCommand(addPhotosRepresentation.Photo, addPhotosRepresentation.Game));
-            return Ok();
+            return Created("dbphotos", addPhotosRepresentation);
         }
 
         //[Authorize(Roles = "Admin")]

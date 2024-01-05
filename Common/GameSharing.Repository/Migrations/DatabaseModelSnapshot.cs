@@ -275,7 +275,7 @@ namespace GameSharing.Repository.Migrations
                     b.HasOne("GameSharing.Model.AccountService.User", "User")
                         .WithMany("Games")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");

@@ -77,12 +77,12 @@ namespace GameSharing.Account.Service.Controllers
             return StatusCode(403);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Register()
-        //{
-        //    await mediator.Send(new RegisterCommand());
-        //    return Ok();
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] RegisterRepresantation registerRepresantation)
+        {
+            await mediator.Send(new RegisterCommand(registerRepresantation.Name, registerRepresantation.Email, registerRepresantation.Password));
+            return Created("dbusers", registerRepresantation);
+        }
 
         [Route("{id}")]
         [HttpDelete]

@@ -17,7 +17,7 @@ namespace GameSharing.Account.Service.Application.Commands.Register
         public string Password { get; set; }
         public Guid AuthToken { get; set; }
 
-        public RegisterCommand(string name, string email, string password, Guid authToken)
+        public RegisterCommand(string name, string email, string password)
         {
             Id = Guid.NewGuid();
             Name = name;

@@ -46,7 +46,7 @@ namespace GameSharing.Repository
         {
             modelBuilder.Entity<User>().HasMany(u => u.Games)
                 .WithOne(g => g.User)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         public virtual DbSet<Game> Games { get; set; }

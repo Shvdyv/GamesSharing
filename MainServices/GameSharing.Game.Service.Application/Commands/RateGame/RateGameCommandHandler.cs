@@ -1,4 +1,5 @@
 ﻿using GameSharing.Common;
+using GameSharing.Model.AccountService;
 using GameSharing.Model.GameService;
 using GameSharing.Repository.Repositories;
 using System;
@@ -13,14 +14,17 @@ namespace GameSharing.GameInfo.Service.Application.Commands.RateGame
     public class RateGameCommandHandler : ICommandHandler<RateGameCommand>
     {
         private readonly IRepository<Rate> RateRepository;
+        private readonly IRepository<User> UserRepository;
 
-        public RateGameCommandHandler(IRepository<Rate> rateRepository)
+        public RateGameCommandHandler(IRepository<Rate> rateRepository, IRepository<User> userRepository)
         {
             RateRepository = rateRepository;
+            UserRepository = userRepository;
         }
         public Task Handle(RateGameCommand request, CancellationToken cancellationToken)
         {
-            var rate = new Rate(request.Id, request.UserId, request.Rate, request.Game);
+            var user = UserRepository.GetUser(Guid.Parse(request.UserId));
+            var rate = new Rate(request.Id, user, request.Rate, request.Game);
             RateRepository.Add(rate);
             return Task.CompletedTask;
         }

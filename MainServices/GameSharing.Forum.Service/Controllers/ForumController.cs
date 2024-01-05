@@ -24,7 +24,7 @@ namespace GameSharing.Forum.Service.Controllers
         public async Task<IActionResult> AddPost([FromBody] AddPostRepresantation addPostRepresantation)
         {
             await _mediator.Send(new AddPostCommand(addPostRepresantation.Author, addPostRepresantation.Content));
-            return Ok();
+            return Created("dbpost", addPostRepresantation);
         }
         //[AllowAnonymous]
         [HttpGet]

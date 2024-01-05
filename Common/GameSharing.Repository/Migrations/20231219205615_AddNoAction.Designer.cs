@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameSharing.Repository.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20231219202934_CreateModelCreating")]
-    partial class CreateModelCreating
+    [Migration("20231219205615_AddNoAction")]
+    partial class AddNoAction
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -278,7 +278,7 @@ namespace GameSharing.Repository.Migrations
                     b.HasOne("GameSharing.Model.AccountService.User", "User")
                         .WithMany("Games")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
